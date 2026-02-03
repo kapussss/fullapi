@@ -2,10 +2,10 @@
   "name": "toolgame-proxy",
   "version": "1.0.0",
   "description": "Proxy server for ToolGamePhuXuan APIs",
-  "main": "server.js",
+  "main": "api.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node api.js",
+    "dev": "nodemon api.js",
     "docker:build": "docker build -t toolgame-proxy .",
     "docker:run": "docker run -d -p 3002:3002 --name toolgame-proxy toolgame-proxy",
     "docker:logs": "docker logs -f toolgame-proxy",
