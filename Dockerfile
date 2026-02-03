@@ -7,8 +7,8 @@ WORKDIR /app
 # Sao chép package files
 COPY package*.json ./
 
-# Cài đặt dependencies
-RUN npm ci --only=production
+# Cài đặt dependencies (production only)
+RUN npm install --omit=dev
 
 # Sao chép source code
 COPY . .
