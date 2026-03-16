@@ -27,63 +27,63 @@ app.use((req, res, next) => {
 const API_CONFIGS = {
   'betvip-hu': {
     path: '/api/betvip-hu',
-    target: 'https://toolgamephuxuan.site/betvip-hu.php'
+    target: 'https://congnghetool.site/betvip-hu.php'
   },
   'betvip-md5': {
     path: '/api/betvip-md5',
-    target: 'https://toolgamephuxuan.site/betvip-md5.php'
+    target: 'https://congnghetool.site/betvip-md5.php'
   },
   'api-hit': {
     path: '/api/hit-hu',
-    target: 'https://toolgamephuxuan.site/api-hit.php'
+    target: 'https://congnghetool.site/api-hit.php'
   },
   'api-hitmd5': {
     path: '/api/hit-md5',
-    target: 'https://toolgamephuxuan.site/api-hitmd5.php'
+    target: 'https://congnghetool.site/api-hitmd5.php'
   },
   'api-b52m5': {
     path: '/api/api-b52m5',
-    target: 'https://toolgamephuxuan.site/api-b52md5.php'
+    target: 'https://congnghetool.site/api-b52md5.php'
   },
   'luck8-hu': {
     path: '/api/luck8-hu',
-    target: 'https://toolgamephuxuan.site/luck8-hu.php'
+    target: 'https://congnghetool.site/luck8-hu.php'
   },
   'luck8-md5': {
     path: '/api/luck8-md5',
-    target: 'https://toolgamephuxuan.site/luck8-md5.php'
+    target: 'https://congnghetool.site/luck8-md5.php'
   },
   'sun': {
     path: '/api/sun',
-    target: 'https://toolgamephuxuan.site/sun.php'
+    target: 'https://congnghetool.site/sun.php'
   },
   'sun-sicbo': {
     path: '/api/sun-sicbo',
-    target: 'https://toolgamephuxuan.site/sun-sicbo.php'
+    target: 'https://congnghetool.site/sun-sicbo.php'
   },
   '789': {
     path: '/api/789',
-    target: 'https://toolgamephuxuan.site/789.php'
+    target: 'https://congnghetool.site/789.php'
   },
   'lc79-hu': {
     path: '/api/lc79-hu',
-    target: 'https://toolgamephuxuan.site/lc79-hu.php'
+    target: 'https://congnghetool.site/lc79-hu.php'
   },
   'lc79-md5': {
     path: '/api/lc79-md5',
-    target: 'https://toolgamephuxuan.site/lc79-md5.php'
+    target: 'https://congnghetool.site/lc79-md5.php'
   },
   '68': {
     path: '/api/68',
-    target: 'https://toolgamephuxuan.site/68.php'
+    target: 'https://congnghetool.site/68.php'
   },
   'xocdia88-hu': {
     path: '/api/xocdia88-hu',
-    target: 'https://toolgamephuxuan.site/xocdia88-hu.php'
+    target: 'https://congnghetool.site/xocdia88-hu.php'
   },
   'xocdia88-md5': {
     path: '/api/xocdia88-md5',
-    target: 'https://toolgamephuxuan.site/xocdia88-md5.php'
+    target: 'https://congnghetool.site/xocdia88-md5.php'
   }
 };
 
