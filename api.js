@@ -73,9 +73,14 @@ const API_CONFIGS = {
     path: '/api/lc79-md5',
     target: 'https://congnghetool.site/lc79-md5.php'
   },
-  '68': {
-    path: '/api/68',
-    target: 'https://congnghetool.site/68.php'
+  // 68gb endpoints
+  '68gb-hu': {
+    path: '/api/68gb-hu',
+    target: 'https://congnghetool.site/68gb-hu.php'
+  },
+  '68gb-md5': {
+    path: '/api/68gb-md5',
+    target: 'https://congnghetool.site/68gb-md5.php'
   },
   'xocdia88-hu': {
     path: '/api/xocdia88-hu',
@@ -85,7 +90,6 @@ const API_CONFIGS = {
     path: '/api/xocdia88-md5',
     target: 'https://congnghetool.site/xocdia88-md5.php'
   },
-  // BCR added
   'bcr': {
     path: '/api/bcr',
     target: 'https://congnghetool.site/api-bcr.php'
@@ -188,67 +192,8 @@ function handleAxiosError(error, res, apiName) {
   }
 }
 
-// Tạo routes từ config
-Object.values(API_CONFIGS).forEach(config => {
-  // GET requests
-  app.get(config.path, (req, res) => {
-    handleProxyRequest(req, res, config);
-  });
-  
-  // POST requests
-  app.post(config.path, async (req, res) => {
-    try {
-      const { target } = config;
-      
-      const headers = createProxyHeaders(req);
-      headers['Content-Type'] = req.headers['content-type'] || 'application/x-www-form-urlencoded';
-      
-      // Kết hợp params từ query string
-      const params = { ...req.query };
-      
-      // Đối với POST, thường gửi dữ liệu dạng form-urlencoded
-      let data = req.body;
-      if (headers['Content-Type'] === 'application/x-www-form-urlencoded' && typeof data === 'object') {
-        data = new URLSearchParams(data).toString();
-      }
-      
-      const response = await axios.post(target, data, {
-        params: params,
-        headers: headers,
-        timeout: parseInt(process.env.API_TIMEOUT) || 30000,
-        validateStatus: null
-      });
-
-      res.status(response.status).json(response.data);
-      
-    } catch (error) {
-      handleAxiosError(error, res, target);
-    }
-  });
-});
-
-// Dynamic endpoint cho tất cả API
-app.get('/api/:type', (req, res) => {
-  const { type } = req.params;
-  
-  // Tạo map từ short name đến config
-  const apiMap = {};
-  Object.keys(API_CONFIGS).forEach(key => {
-    apiMap[key] = API_CONFIGS[key];
-  });
-  
-  const config = apiMap[type];
-  
-  if (!config) {
-    return res.status(404).json({
-      error: true,
-      message: 'API type not found',
-      availableTypes: Object.keys(apiMap)
-    });
-  }
-  
-  handleProxyRequest(req, res, config);
-});
+// ========== ROUTES (ORDER MATTERS) ==========
+// Specific routes first, then dynamic routes
 
 // Route test tất cả endpoints
 app.get('/api/test-all', async (req, res) => {
@@ -305,6 +250,68 @@ app.get('/', (req, res) => {
   res.json(Object.values(API_CONFIGS).map(config => config.path));
 });
 
+// Tạo routes từ config (các endpoint cụ thể)
+Object.values(API_CONFIGS).forEach(config => {
+  // GET requests
+  app.get(config.path, (req, res) => {
+    handleProxyRequest(req, res, config);
+  });
+  
+  // POST requests
+  app.post(config.path, async (req, res) => {
+    try {
+      const { target } = config;
+      
+      const headers = createProxyHeaders(req);
+      headers['Content-Type'] = req.headers['content-type'] || 'application/x-www-form-urlencoded';
+      
+      // Kết hợp params từ query string
+      const params = { ...req.query };
+      
+      // Đối với POST, thường gửi dữ liệu dạng form-urlencoded
+      let data = req.body;
+      if (headers['Content-Type'] === 'application/x-www-form-urlencoded' && typeof data === 'object') {
+        data = new URLSearchParams(data).toString();
+      }
+      
+      const response = await axios.post(target, data, {
+        params: params,
+        headers: headers,
+        timeout: parseInt(process.env.API_TIMEOUT) || 30000,
+        validateStatus: null
+      });
+
+      res.status(response.status).json(response.data);
+      
+    } catch (error) {
+      handleAxiosError(error, res, target);
+    }
+  });
+});
+
+// Dynamic endpoint cho tất cả API (must be last)
+app.get('/api/:type', (req, res) => {
+  const { type } = req.params;
+  
+  // Tạo map từ short name đến config
+  const apiMap = {};
+  Object.keys(API_CONFIGS).forEach(key => {
+    apiMap[key] = API_CONFIGS[key];
+  });
+  
+  const config = apiMap[type];
+  
+  if (!config) {
+    return res.status(404).json({
+      error: true,
+      message: 'API type not found',
+      availableTypes: Object.keys(apiMap)
+    });
+  }
+  
+  handleProxyRequest(req, res, config);
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
@@ -334,17 +341,18 @@ const PORT = process.env.PORT || 3002;
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
-  console.log(`🚀 ToolGamePhuXuan Proxy Server running on http://${HOST}:${PORT}`);
+  console.log(`🚀 Server running on http://${HOST}:${PORT}`);
   console.log(`\n📡 Available Endpoints (${Object.keys(API_CONFIGS).length} APIs):`);
   
   // Hiển thị theo nhóm cho dễ đọc
   const groups = {
-    'Bet/Games': ['betvip-hu','betvip-md5', 'sun', 'sun-sicbo', '789', '68', 'api-b52md5'],
+    'Bet/Games': ['betvip-hu','betvip-md5', 'sun', 'sun-sicbo', '789', 'api-b52m5'],
     'LC79': ['lc79-hu', 'lc79-md5'],
     'Luck8': ['luck8-hu', 'luck8-md5'],
     'XocDia88': ['xocdia88-hu', 'xocdia88-md5'],
     'HitClub': ['api-hit', 'api-hitmd5'],
-    'BCR': ['bcr']  // New group for BCR
+    'BCR': ['bcr'],
+    '68gb': ['68gb-hu', '68gb-md5']
   };
   
   Object.entries(groups).forEach(([groupName, apis]) => {
